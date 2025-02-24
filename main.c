@@ -1,47 +1,26 @@
-/*********************************************************************************
-* ¡¾±àÐ´Ê±¼ä¡¿£º 2020Äê12ÔÂ12ÈÕ
-* ¡¾×÷    Õß¡¿£º ÇåÏèµç×Ó:03
-* ¡¾°æ    ±¾¡¿£º 1.0
-* ¡¾Íø    Õ¾¡¿£º http://www.QXMBOT.com/ 
-* ¡¾ÌÔ±¦µêÆÌ¡¿£º http://qxmcu.taobao.com/ (Ö±Ïúµê)
-* ¡¾ÊµÑéÆ½Ì¨¡¿£º QX-A11ÑÇ¿ËÁ¦ÖÇÄÜÐ¡³µ  STC89C52
-* ¡¾Íâ²¿¾§Õñ¡¿£º 11.0592mhz	
-* ¡¾Ö÷¿ØÐ¾Æ¬¡¿£º STC89C52
-* ¡¾±àÒë»·¾³¡¿£º Keil ¦ÌVisio4
-*	°æÈ¨ËùÓÐ£¬µÁ°æ±Ø¾¿¡£
-*	Copyright(C) QXMBOT
-*	All rights reserved
-***********************************************************************************
-* ¡¾½ÓÏßËµÃ÷¡¿£ºÇë²Î¿¼×ÊÁÏÄÚÍ¼ÎÄËµÃ÷Êé
-* ¡¾³ÌÐò¹¦ÄÜ¡¿£ºQX-A11ÑÇ¿ËÁ¦ÖÇÄÜÐ¡³µºìÍâÑ­¼£		   			            			    
-* ¡¾×¢ÒâÊÂÏî¡¿£º±ÜÃâÐ¡³µ×²ÏòÕÏ°­Îï»òÐ¡³µÂÖ×Ó¶Â×ª
-				1¡¢²»ÄÜÔÚ×ÔÈ»¹âÇ¿ÁÒµÄÌõ¼þÏÂ½øÐÐÊÔÑé
-				2¡¢½øÐÐÊÔÑéÇ°±ØÐëµ÷½ÚºÃÑ­¼£Ì½Í·Ê¹ÆäÄÜÇø·ÖÑ­¼£ºÚÏß
-				3¡¢´Ë³ÌÐòÖ»×ö²Î¿¼£¬Êµ¼ÊÔËÐÐÐ§¹ûÐè¸ù¾Ý²»Í¬ÊµÑé³¡µØ½øÐÐ²»Í¬µ÷ÊÔ
-**********************************************************************************/
-//ºÚÏßÌù3ÀåÃ×¿í£¬·ñÔòÐ¡³µ°Ú¶¯ºÜÀ÷º¦
-#include <reg52.h>//51Í·ÎÄ¼þ
-#include <QX_A11.h>//QX_A11ÖÇÄÜÐ¡³µÅäÖÃÎÄ¼þ
+//é»‘çº¿è´´3åŽ˜ç±³å®½ï¼Œå¦åˆ™å°è½¦æ‘†åŠ¨å¾ˆåŽ‰å®³
+#include <reg52.h>//51å¤´æ–‡ä»¶
+#include <QX_A11.h>//QX_A11æ™ºèƒ½å°è½¦é…ç½®æ–‡ä»¶
 #include <intrins.h>
-unsigned char	pwm_val_left,pwm_val_right;	//ÖÐ¼ä±äÁ¿£¬ÓÃ»§ÇëÎðÐÞ¸Ä¡£
-unsigned char 	pwm_left,pwm_right;			//¶¨ÒåPWMÊä³ö¸ßµçÆ½µÄÊ±¼äµÄ±äÁ¿¡£ÓÃ»§²Ù×÷PWMµÄ±äÁ¿¡£
-#define		PWM_DUTY		200			//¶¨ÒåPWMµÄÖÜÆÚ£¬ÊýÖµÎª¶¨Ê±Æ÷0Òç³öÖÜÆÚ£¬¼ÙÈç¶¨Ê±Æ÷Òç³öÊ±¼äÎª100us£¬ÔòPWMÖÜÆÚÎª20ms¡£
-#define		PWM_HIGH_MIN	70			//ÏÞÖÆPWMÊä³öµÄ×îÐ¡Õ¼¿Õ±È¡£ÓÃ»§ÇëÎðÐÞ¸Ä¡£
-#define		PWM_HIGH_MAX	PWM_DUTY	//ÏÞÖÆPWMÊä³öµÄ×î´óÕ¼¿Õ±È¡£ÓÃ»§ÇëÎðÐÞ¸Ä¡£
+unsigned char	pwm_val_left,pwm_val_right;	//ä¸­é—´å˜é‡ï¼Œç”¨æˆ·è¯·å‹¿ä¿®æ”¹ã€‚
+unsigned char 	pwm_left,pwm_right;			//å®šä¹‰PWMè¾“å‡ºé«˜ç”µå¹³çš„æ—¶é—´çš„å˜é‡ã€‚ç”¨æˆ·æ“ä½œPWMçš„å˜é‡ã€‚
+#define		PWM_DUTY		200			//å®šä¹‰PWMçš„å‘¨æœŸï¼Œæ•°å€¼ä¸ºå®šæ—¶å™¨0æº¢å‡ºå‘¨æœŸï¼Œå‡å¦‚å®šæ—¶å™¨æº¢å‡ºæ—¶é—´ä¸º100usï¼Œåˆ™PWMå‘¨æœŸä¸º20msã€‚
+#define		PWM_HIGH_MIN	70			//é™åˆ¶PWMè¾“å‡ºçš„æœ€å°å ç©ºæ¯”ã€‚ç”¨æˆ·è¯·å‹¿ä¿®æ”¹ã€‚
+#define		PWM_HIGH_MAX	PWM_DUTY	//é™åˆ¶PWMè¾“å‡ºçš„æœ€å¤§å ç©ºæ¯”ã€‚ç”¨æˆ·è¯·å‹¿ä¿®æ”¹ã€‚
 
-void Timer0_Init(void); //¶¨Ê±Æ÷0³õÊ¼»¯
-void LoadPWM(void);//×°ÈëPWMÊä³öÖµ 
-void forward(unsigned char LeftSpeed,unsigned char RightSpeed);//QX_A11ÖÇÄÜÐ¡³µÇ°½ø 
-void left_run(unsigned char LeftSpeed,unsigned char RightSpeed);//QX_A11ÖÇÄÜÐ¡³µ×ó×ª  
-void right_run(unsigned char LeftSpeed,unsigned char RightSpeed);//QX_A11ÖÇÄÜÐ¡³µÓÒ×ª
-void stop(void);//QX_A11ÖÇÄÜÐ¡³µÍ£³µ
+void Timer0_Init(void); //å®šæ—¶å™¨0åˆå§‹åŒ–
+void LoadPWM(void);//è£…å…¥PWMè¾“å‡ºå€¼ 
+void forward(unsigned char LeftSpeed,unsigned char RightSpeed);//QX_A11æ™ºèƒ½å°è½¦å‰è¿› 
+void left_run(unsigned char LeftSpeed,unsigned char RightSpeed);//QX_A11æ™ºèƒ½å°è½¦å·¦è½¬  
+void right_run(unsigned char LeftSpeed,unsigned char RightSpeed);//QX_A11æ™ºèƒ½å°è½¦å³è½¬
+void stop(void);//QX_A11æ™ºèƒ½å°è½¦åœè½¦
 int x,y;
 void Delay400ms();
 
 void Tracking()
 {
     char d1 = left_led1, d2 = right_led2,d3 = right_led1;
-	//Îª0 Ã»ÓÐÊ¶±ðµ½ºÚÏß Îª1Ê¶±ðµ½ºÚÏß
+	//ä¸º0 æ²¡æœ‰è¯†åˆ«åˆ°é»‘çº¿ ä¸º1è¯†åˆ«åˆ°é»‘çº¿
 	if (d1 == 0 && d3 == 0) {
         forward(170, 130);
     }
@@ -89,10 +68,10 @@ void Tracking()
     }
 }
 
-/*Ö÷º¯Êý*/     
+/*ä¸»å‡½æ•°*/     
 void main(void)
 {
-	Timer0_Init();//¶¨Ê±0³õÊ¼»¯
+	Timer0_Init();//å®šæ—¶0åˆå§‹åŒ–
     x = 0,y = 0;
 	while(1)
 	{
@@ -102,48 +81,48 @@ void main(void)
 
 
 /*********************************************
-QX_A11ÖÇÄÜÐ¡³µÇ°½ø
-Èë¿Ú²ÎÊý£ºLeftSpeed£¬RightSpeed
-³ö¿Ú²ÎÊý: ÎÞ
-ËµÃ÷£ºLeftSpeed£¬RightSpeed·Ö±ðÉèÖÃ×óÓÒ³µÂÖ×ªËÙ
+QX_A11æ™ºèƒ½å°è½¦å‰è¿›
+å…¥å£å‚æ•°ï¼šLeftSpeedï¼ŒRightSpeed
+å‡ºå£å‚æ•°: æ— 
+è¯´æ˜Žï¼šLeftSpeedï¼ŒRightSpeedåˆ†åˆ«è®¾ç½®å·¦å³è½¦è½®è½¬é€Ÿ
 **********************************************/
 void forward(unsigned char LeftSpeed,unsigned char RightSpeed)
 {
-	pwm_left = LeftSpeed,pwm_right =  RightSpeed;//ÉèÖÃËÙ¶È
-	left_motor_go; //×óµç»úÇ°½ø
-	right_motor_go; //ÓÒµç»úÇ°½ø
+	pwm_left = LeftSpeed,pwm_right =  RightSpeed;//è®¾ç½®é€Ÿåº¦
+	left_motor_go; //å·¦ç”µæœºå‰è¿›
+	right_motor_go; //å³ç”µæœºå‰è¿›
 }
-/*Ð¡³µ×ó×ª*/
+/*å°è½¦å·¦è½¬*/
 /*********************************************
-QX_A11ÖÇÄÜÐ¡³µ×ó×ª
-Èë¿Ú²ÎÊý£ºLeftSpeed£¬RightSpeed
-³ö¿Ú²ÎÊý: ÎÞ
-ËµÃ÷£ºLeftSpeed£¬RightSpeed·Ö±ðÉèÖÃ×óÓÒ³µÂÖ×ªËÙ
+QX_A11æ™ºèƒ½å°è½¦å·¦è½¬
+å…¥å£å‚æ•°ï¼šLeftSpeedï¼ŒRightSpeed
+å‡ºå£å‚æ•°: æ— 
+è¯´æ˜Žï¼šLeftSpeedï¼ŒRightSpeedåˆ†åˆ«è®¾ç½®å·¦å³è½¦è½®è½¬é€Ÿ
 **********************************************/
 void left_run(unsigned char LeftSpeed,unsigned char RightSpeed)
 {
-	pwm_left = LeftSpeed,pwm_right =  RightSpeed;//ÉèÖÃËÙ¶È
-	left_motor_back; //×óµç»úºóÍË
-	right_motor_go; //ÓÒµç»úÇ°½ø	
+	pwm_left = LeftSpeed,pwm_right =  RightSpeed;//è®¾ç½®é€Ÿåº¦
+	left_motor_back; //å·¦ç”µæœºåŽé€€
+	right_motor_go; //å³ç”µæœºå‰è¿›	
 }
 
 /*********************************************
-QX_A11ÖÇÄÜÐ¡³µÓÒ×ª
-Èë¿Ú²ÎÊý£ºLeftSpeed£¬RightSpeed
-³ö¿Ú²ÎÊý: ÎÞ
-ËµÃ÷£ºLeftSpeed£¬RightSpeed·Ö±ðÉèÖÃ×óÓÒ³µÂÖ×ªËÙ
+QX_A11æ™ºèƒ½å°è½¦å³è½¬
+å…¥å£å‚æ•°ï¼šLeftSpeedï¼ŒRightSpeed
+å‡ºå£å‚æ•°: æ— 
+è¯´æ˜Žï¼šLeftSpeedï¼ŒRightSpeedåˆ†åˆ«è®¾ç½®å·¦å³è½¦è½®è½¬é€Ÿ
 **********************************************/
 void right_run(unsigned char LeftSpeed,unsigned char RightSpeed)
 {
-	pwm_left = LeftSpeed,pwm_right =  RightSpeed;//ÉèÖÃËÙ¶È
-	right_motor_back;//ÓÒµç»úºóÍË
-	left_motor_go;    //×óµç»úÇ°½ø
+	pwm_left = LeftSpeed,pwm_right =  RightSpeed;//è®¾ç½®é€Ÿåº¦
+	right_motor_back;//å³ç”µæœºåŽé€€
+	left_motor_go;    //å·¦ç”µæœºå‰è¿›
 }
 /*********************************************
-QX_A11ÖÇÄÜÐ¡³µÍ£³µ
-Èë¿Ú²ÎÊý£ºÎÞ
-³ö¿Ú²ÎÊý: ÎÞ
-ËµÃ÷£ºQX_A11ÖÇÄÜÐ¡³µÍ£³µ
+QX_A11æ™ºèƒ½å°è½¦åœè½¦
+å…¥å£å‚æ•°ï¼šæ— 
+å‡ºå£å‚æ•°: æ— 
+è¯´æ˜Žï¼šQX_A11æ™ºèƒ½å°è½¦åœè½¦
 **********************************************/
 void stop(void)
 {
@@ -151,42 +130,42 @@ void stop(void)
 	right_motor_stops;
 }
 /*********************************************
-QX_A11ÖÇÄÜÐ¡³µPWMÊä³ö
-Èë¿Ú²ÎÊý£ºÎÞ
-³ö¿Ú²ÎÊý: ÎÞ
-ËµÃ÷£º×°ÔØPWMÊä³ö,Èç¹ûÉèÖÃÈ«¾Ö±äÁ¿pwm_left,pwm_right·Ö±ðÅäÖÃ×óÓÒÊä³ö¸ßµçÆ½Ê±¼ä
+QX_A11æ™ºèƒ½å°è½¦PWMè¾“å‡º
+å…¥å£å‚æ•°ï¼šæ— 
+å‡ºå£å‚æ•°: æ— 
+è¯´æ˜Žï¼šè£…è½½PWMè¾“å‡º,å¦‚æžœè®¾ç½®å…¨å±€å˜é‡pwm_left,pwm_rightåˆ†åˆ«é…ç½®å·¦å³è¾“å‡ºé«˜ç”µå¹³æ—¶é—´
 **********************************************/
 void LoadPWM(void)
 {
-	if(pwm_left > PWM_HIGH_MAX)		pwm_left = PWM_HIGH_MAX;	//Èç¹û×óÊä³öÐ´Èë´óÓÚ×î´óÕ¼¿Õ±ÈÊý¾Ý£¬ÔòÇ¿ÖÆÎª×î´óÕ¼¿Õ±È¡£
-	if(pwm_left < PWM_HIGH_MIN)		pwm_left = PWM_HIGH_MIN;	//Èç¹û×óÊä³öÐ´ÈëÐ¡ÓÚ×îÐ¡Õ¼¿Õ±ÈÊý¾Ý£¬ÔòÇ¿ÖÆÎª×îÐ¡Õ¼¿Õ±È¡£
-	if(pwm_right > PWM_HIGH_MAX)	pwm_right = PWM_HIGH_MAX;	//Èç¹ûÓÒÊä³öÐ´Èë´óÓÚ×î´óÕ¼¿Õ±ÈÊý¾Ý£¬ÔòÇ¿ÖÆÎª×î´óÕ¼¿Õ±È¡£
-	if(pwm_right < PWM_HIGH_MIN)	pwm_right = PWM_HIGH_MIN;	//Èç¹ûÓÒÊä³öÐ´ÈëÐ¡ÓÚ×îÐ¡Õ¼¿Õ±ÈÊý¾Ý£¬ÔòÇ¿ÖÆÎª×îÐ¡Õ¼¿Õ±È¡£
-	if(pwm_val_left<=pwm_left)		Left_moto_pwm = 1;  //×°ÔØ×óPWMÊä³ö¸ßµçÆ½Ê±¼ä
-	else Left_moto_pwm = 0; 						    //×°ÔØ×óPWMÊä³öµÍµçÆ½Ê±¼ä
-	if(pwm_val_left>=PWM_DUTY)		pwm_val_left = 0;	//Èç¹û×ó¶Ô±ÈÖµ´óÓÚµÈÓÚ×î´óÕ¼¿Õ±ÈÊý¾Ý£¬ÔòÎªÁã
+	if(pwm_left > PWM_HIGH_MAX)		pwm_left = PWM_HIGH_MAX;	//å¦‚æžœå·¦è¾“å‡ºå†™å…¥å¤§äºŽæœ€å¤§å ç©ºæ¯”æ•°æ®ï¼Œåˆ™å¼ºåˆ¶ä¸ºæœ€å¤§å ç©ºæ¯”ã€‚
+	if(pwm_left < PWM_HIGH_MIN)		pwm_left = PWM_HIGH_MIN;	//å¦‚æžœå·¦è¾“å‡ºå†™å…¥å°äºŽæœ€å°å ç©ºæ¯”æ•°æ®ï¼Œåˆ™å¼ºåˆ¶ä¸ºæœ€å°å ç©ºæ¯”ã€‚
+	if(pwm_right > PWM_HIGH_MAX)	pwm_right = PWM_HIGH_MAX;	//å¦‚æžœå³è¾“å‡ºå†™å…¥å¤§äºŽæœ€å¤§å ç©ºæ¯”æ•°æ®ï¼Œåˆ™å¼ºåˆ¶ä¸ºæœ€å¤§å ç©ºæ¯”ã€‚
+	if(pwm_right < PWM_HIGH_MIN)	pwm_right = PWM_HIGH_MIN;	//å¦‚æžœå³è¾“å‡ºå†™å…¥å°äºŽæœ€å°å ç©ºæ¯”æ•°æ®ï¼Œåˆ™å¼ºåˆ¶ä¸ºæœ€å°å ç©ºæ¯”ã€‚
+	if(pwm_val_left<=pwm_left)		Left_moto_pwm = 1;  //è£…è½½å·¦PWMè¾“å‡ºé«˜ç”µå¹³æ—¶é—´
+	else Left_moto_pwm = 0; 						    //è£…è½½å·¦PWMè¾“å‡ºä½Žç”µå¹³æ—¶é—´
+	if(pwm_val_left>=PWM_DUTY)		pwm_val_left = 0;	//å¦‚æžœå·¦å¯¹æ¯”å€¼å¤§äºŽç­‰äºŽæœ€å¤§å ç©ºæ¯”æ•°æ®ï¼Œåˆ™ä¸ºé›¶
 
-	if(pwm_val_right<=pwm_right)	Right_moto_pwm = 1; //×°ÔØÓÒPWMÊä³ö¸ßµçÆ½Ê±¼ä
-	else Right_moto_pwm = 0; 							//×°ÔØÓÒPWMÊä³öµÍµçÆ½Ê±¼ä
-	if(pwm_val_right>=PWM_DUTY)		pwm_val_right = 0;	//Èç¹ûÓÒ¶Ô±ÈÖµ´óÓÚµÈÓÚ×î´óÕ¼¿Õ±ÈÊý¾Ý£¬ÔòÎªÁã
+	if(pwm_val_right<=pwm_right)	Right_moto_pwm = 1; //è£…è½½å³PWMè¾“å‡ºé«˜ç”µå¹³æ—¶é—´
+	else Right_moto_pwm = 0; 							//è£…è½½å³PWMè¾“å‡ºä½Žç”µå¹³æ—¶é—´
+	if(pwm_val_right>=PWM_DUTY)		pwm_val_right = 0;	//å¦‚æžœå³å¯¹æ¯”å€¼å¤§äºŽç­‰äºŽæœ€å¤§å ç©ºæ¯”æ•°æ®ï¼Œåˆ™ä¸ºé›¶
 }
-/********************* Timer0³õÊ¼»¯************************/
+/********************* Timer0åˆå§‹åŒ–************************/
 void Timer0_Init(void)
 {
-	TMOD |= 0x02;//¶¨Ê±Æ÷0£¬8Î»×Ô¶¯ÖØ×°Ä£¿é
+	TMOD |= 0x02;//å®šæ—¶å™¨0ï¼Œ8ä½è‡ªåŠ¨é‡è£…æ¨¡å—
 	TH0 = 164;
-	TL0 = 164;//11.0592M¾§Õñ£¬12TÒç³öÊ±¼äÔ¼µÈÓÚ100Î¢Ãë
-	TR0 = 1;//Æô¶¯¶¨Ê±Æ÷0
-	ET0 = 1;//ÔÊÐí¶¨Ê±Æ÷0ÖÐ¶Ï
-	EA	= 1;//×ÜÖÐ¶ÏÔÊÐí	
+	TL0 = 164;//11.0592Mæ™¶æŒ¯ï¼Œ12Tæº¢å‡ºæ—¶é—´çº¦ç­‰äºŽ100å¾®ç§’
+	TR0 = 1;//å¯åŠ¨å®šæ—¶å™¨0
+	ET0 = 1;//å…è®¸å®šæ—¶å™¨0ä¸­æ–­
+	EA	= 1;//æ€»ä¸­æ–­å…è®¸	
 }
  
-/********************* Timer0ÖÐ¶Ïº¯Êý************************/
+/********************* Timer0ä¸­æ–­å‡½æ•°************************/
 void timer0_int (void) interrupt 1
 {
 	 pwm_val_left++;
 	 pwm_val_right++;
-	 LoadPWM();//×°ÔØPWMÊä³ö
+	 LoadPWM();//è£…è½½PWMè¾“å‡º
 }	
 
 void Delay400ms()		//@11.0592MHz
